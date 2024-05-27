@@ -237,9 +237,16 @@ function conda_environment_exists() {
 }
 
 function create_conda_environment() {
-	conda env create -n ${COOKBOOK_CONDA_ENV} -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yml --force
-	conda activate ${COOKBOOK_CONDA_ENV}
-	pip install --no-cache-dir -r $COOKBOOK_WORKSPACE_DIR/.binder/requirements.txt
+	if [ -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yml ]; then
+		conda env create -n ${COOKBOOK_CONDA_ENV} -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yml --force
+		conda activate ${COOKBOOK_CONDA_ENV}
+	elif  [ -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yaml ]; then
+		conda env create -n ${COOKBOOK_CONDA_ENV} -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yaml --force
+		conda activate ${COOKBOOK_CONDA_ENV}
+	fi
+	if [ -f $COOKBOOK_WORKSPACE_DIR/.binder/requirements.txt ]; then
+		pip install --no-cache-dir -r $COOKBOOK_WORKSPACE_DIR/.binder/requirements.txt
+	fi
 	python -m ipykernel install --user --name "${COOKBOOK_CONDA_ENV}" --display-name "Python (${COOKBOOK_CONDA_ENV})"
 }
 
