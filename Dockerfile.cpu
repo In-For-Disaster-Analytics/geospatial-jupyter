@@ -13,14 +13,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     locales \
     pandoc \
+    python3 \
+    python3-pip \
     wget \
     unzip \
     vim \
     build-essential \
     ssh \
+    rsync \
     && apt-get clean && rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen
+
+RUN pip install --upgrade --no-cache-dir \
+    pip \
+    setuptools \
+    wheel
 
 # Add container user and group
 ARG NB_USER=jovyan
