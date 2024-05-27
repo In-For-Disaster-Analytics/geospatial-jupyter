@@ -1,19 +1,33 @@
 #!/bin/bash
-
-
-
-
 set -xe
-start_time=$(date +%s)
-# Validate parameters
+
+# Repository Variables
+# GIT_REPO_URL: URL of the repository to clone where the notebook and environment files are located
+# COOKBOOK_NAME: Name of the cookbook
+# COOKBOOK_CONDA_ENV: Name of the conda environment
+# IS_GPU_JOB: Boolean value to indicate if the job is a GPU job. If true, it will load the CUDA module
+export GIT_REPO_URL="https://github.com/In-For-Disaster-Analytics/Cookbook-Tutorial-Template.git"
+export COOKBOOK_NAME="cookbook-template-jupyter"
+export COOKBOOK_CONDA_ENV="example"
+IS_GPU_JOB=false
+
+
+# Cookbook Variables
+# DOWNLOAD_LATEST_VERSION: Boolean value to download the latest version of the repository
+# UPDATE_CONDA_ENV: Boolean value to update the conda environment
+# GIT_BRANCH: Branch of the repository to clone
 if [ "$1" != "true" ] && [ "$1" != "false" ]; then
 	echo "The first parameter must be a boolean value to recreate the environment"
 	exit 1
 fi
-if [ "$#" -ne 4 ]; then
+if [ "$#" -ne 3 ]; then
 	echo "Illegal number of parameters"
 	exit 1
 fi
+
+export DOWNLOAD_LATEST_VERSION=$1
+export UPDATE_CONDA_ENV=$2
+export GIT_BRANCH=$3
 
 function install_conda() {
 	echo "Checking if miniconda3 is installed..."
@@ -42,8 +56,6 @@ function load_cuda() {
 }
 
 function export_repo_variables() {
-	COOKBOOK_NAME="sites-and-stories-nlp"
-	COOKBOOK_CONDA_ENV="llm"
 	COOKBOOK_DIR=${WORK}/cookbooks
 	COOKBOOK_WORKSPACE_DIR=${COOKBOOK_DIR}/${COOKBOOK_NAME}
 	COOKBOOK_REPOSITORY_PARENT_DIR=${COOKBOOK_DIR}/.repository
@@ -52,7 +64,6 @@ function export_repo_variables() {
 	NODE_HOSTNAME_PREFIX=$(hostname -s) # Short Host Name  -->  name of compute node: c###-###
 	NODE_HOSTNAME_DOMAIN=$(hostname -d) # DNS Name  -->  stampede2.tacc.utexas.edu
 	NODE_HOSTNAME_LONG=$(hostname -f)   # Fully Qualified Domain Name  -->  c###-###.stampede2.tacc.utexas.edu
-	export COOKBOOK_NAME
 	export COOKBOOK_DIR
 	export COOKBOOK_WORKSPACE_DIR
 	export COOKBOOK_REPOSITORY_DIR
@@ -61,7 +72,6 @@ function export_repo_variables() {
 	export NODE_HOSTNAME_PREFIX
 	export NODE_HOSTNAME_DOMAIN
 	export NODE_HOSTNAME_LONG
-	export COOKBOOK_CONDA_ENV
 }
 
 function clone_cookbook_on_workspace() {
@@ -73,15 +83,6 @@ function clone_cookbook_on_workspace() {
 			mv ${COOKBOOK_WORKSPACE_DIR} ${COOKBOOK_WORKSPACE_DIR}-${DATE_FILE_SUFFIX}
 			git clone ${GIT_REPO_URL} --branch ${GIT_BRANCH} ${COOKBOOK_WORKSPACE_DIR}
 		fi
-	fi
-}
-
-function clone_cookbook_on_archive() {
-	if [ ! -d "${COOKBOOK_REPOSITORY_DIR}" ]; then
-		mkdir -p ${COOKBOOK_REPOSITORY_DIR}
-		git clone ${GIT_REPO_URL} --branch ${GIT_BRANCH} ${COOKBOOK_REPOSITORY_DIR}
-	else
-		git -C ${COOKBOOK_REPOSITORY_DIR} pull origin ${GIT_BRANCH}
 	fi
 }
 
@@ -238,7 +239,6 @@ function conda_environment_exists() {
 function create_conda_environment() {
 	conda env create -n ${COOKBOOK_CONDA_ENV} -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yml --force
 	conda activate ${COOKBOOK_CONDA_ENV}
-	conda install jupyterlab ipykernel -y
 	pip install --no-cache-dir -r $COOKBOOK_WORKSPACE_DIR/.binder/requirements.txt
 	python -m ipykernel install --user --name "${COOKBOOK_CONDA_ENV}" --display-name "Python (${COOKBOOK_CONDA_ENV})"
 }
@@ -263,33 +263,13 @@ function handle_installation() {
 	fi
 }
 
-function start_ollama(){
-	if [ ! -f $SCRATCH/ollama ]; then
-		wget "https://github.com/ollama/ollama/releases/download/v0.1.20/ollama-linux-amd64"
-		chmod 755 ollama-linux-amd64
-		mv ollama-linux-amd64 $SCRATCH/ollama
-	fi
-	nohup $SCRATCH/ollama serve &
-}
 
-
-function get_elapsed_time() {
-	start_time=$1
-	end_time=$(date +%s)
-	elapsed_time=$(($end_time - $start_time))
-	minutes=$(($elapsed_time / 60))
-	echo "Elapsed time: $minutes minutes"
-}
-
-#Parameters
-export DOWNLOAD_LATEST_VERSION=$1
-export UPDATE_CONDA_ENV=$2
-export GIT_REPO_URL=$3
-export GIT_BRANCH=$4
 
 #Execution
 install_conda
-load_cuda
+if [ "$IS_GPU_JOB" = "true" ]; then
+	load_cuda
+fi
 export_repo_variables
 init_directory
 load_tap_functions
@@ -299,7 +279,5 @@ create_jupyter_configuration
 handle_installation
 run_jupyter
 port_fowarding
-start_ollama
 send_url_to_webhook
-get_elapsed_time $start_time
 session_cleanup

@@ -1,0 +1,6 @@
+name: llm
+channels:
+  - conda-forge
+dependencies:
+  - ipywidgets
+  - ipykernel
