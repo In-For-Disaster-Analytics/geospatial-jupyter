@@ -1,55 +1,116 @@
-# Cookbook repository for Conda environments
+This template is the first in a [series of tutorials](#next-tutorials) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python using conda or a Jupyter Notebook.
 
-This repository contains the files needed to build a Docker image with a Conda environment for running the Tapis apps.
+## Requirements
 
-This Docker image is specifically configured to install a singular Conda environment, based on the contents of a Git repository. The repository must contain a `./binder/environment.yml` file with the Conda environment definition, and optionally a `./binder/requirements.txt` file with additional Python dependencies.
+- A GitHub account
+- TACC account. If you don't have one, you can request one [here](https://accounts.tacc.utexas.edu/register)
+- To access TACC systems, you should have an [allocation](https://tacc.utexas.edu/use-tacc/allocations/)
+  - You can see your allocations [here](https://ptdatax.tacc.utexas.edu/workbench/allocations/approved)
+  - If you don't have an allocation, you can request one [here](https://portal.tacc.utexas.edu/allocation-request)
 
-## Installation process
+## Template Overview
 
-When the job is submitted, the Tapis platform will pull the Docker image and run the container. The container will run the `run.sh` script, which will activate the Conda environment and run the app.
+This template creates a cookbook that runs a Jupyter Notebook stored in the repository. The cookbook will download the Jupyter Notebook, install the required Python packages, and execute the notebook in the TACC cluster.
 
-## Important Variables
+The environment and notebook are saved on the TACC storage. Therefore, you can resume the execution of the notebook from where it stopped.
 
-- `GIT_REPO_URL`: URL of the cookbook repository to use.
-- `GIT_BRANCH`: Branch of the cookbook repository to use.
-- `COOKBOOK_NAME`: Name of the cookbook, used for naming the directory
-- `COOKBOOK_WORKSPACE_DIR`: This is the designated directory for cloning the cookbook repository. If the directory already exists, the script does not perform an update. This directory serves as the active working directory during the Jupyter session, allowing direct interaction with the contents.
-- `COOKBOOK_REPOSITORY_DIR`: This directory is also used for cloning the cookbook repository. However, in contrast to `COOKBOOK_WORKSPACE_DIR`, if it already exists, the script updates the repository to ensure it contains the most recent changes. This directory is maintained as a hidden area, primarily utilized for update checks and not intended for direct user interaction.
-- `COOKBOOK_CONDA_ENV`: Name of the Conda environment to use.
+### How does it work?
 
-## Execution
+1. [`app.json`](app.json) file: contains the definition of the Tapis application, including the application's name, description, Docker image, input files, and advanced options.
+2. [`Dockerfile`](Dockerfile): a Docker image is built from the [`Dockerfile`](./Dockerfile). The Docker image defines the runtime environment for the application and the files that will be used by the application.
+3. [`run.sh`](run.sh): contains all the commands that will be executed on the TACC cluster.
+4. [`notebook.ipynb`](notebook.ipynb): a Jupyter Notebook that will be executed by the application.
+5. [`.binder/requirements.txt`](requirements.txt): a file that contains the Python packages that will be installed in the Docker image.
+6. [`.binder/environment.yml`](environment.yml): a file that contains the conda environment that will be installed in the Docker image.
 
-1. `install_conda`: Checks if Miniconda is installed in a specified directory (`$WORK/miniconda3`). If not installed, it downloads and installs Miniconda, configures the `PATH`, and sets Conda to not automatically activate the base environment on startup.
-2. `load_cuda`: Loads the CUDA module, version 12.0
-3. `export_repo_variables`: Sets and exports various environment variables related to a Git repository, its environment. Set up the repository and branch to use, and the environment name.
-4. `clone_repository`:
-   6.1 Clones the Git repository specified in `GIT_REPO` and `GIT_BRANCH` into the directory specified in `COOKBOOK_WORKSPACE_DIR`. If the directory exists, it doesn't clone the repository or update it.
-   6.2. Clone the Git repository specified in `GIT_REPO` and `GIT_BRANCH` into the directory specified in `COOKBOOK_REPOSITORY_DIR`. If the directory exists, it updates the repository.
-5. `load_tap_functions`: Loads TACC's specific functions for job management.
-6. `get_tap_certificate`: Ensures a TLS certificate exists for a secure session.
-7. `get_tap_token`: Generates a token for a Jupyter session and retrieves a port for login.
-8. `create_jupyter_configuration`: Creates a configuration file for a JupyterLab session, including SSL options and kernel settings.
-9. `run_jupyter`: Starts JupyterLab and logs its output. It retries once if the first attempt fails.
-10. `port_fowarding`: Sets up SSH tunneling for port forwarding, allowing external access to the JupyterLab session.
-11. `send_url_to_webhook`: Sends the JupyterLab session URL to a webhook, presumably to notify users that the session is ready.
-12. `session_cleanup`: Monitors a file (`delete_me_to_end_session`) and ends the Jupyter session when this file is deleted.
-13. `install_dependencies`: Creates or activates a Conda environment specified in the Git repository and installs necessary Python dependencies.
+### Job run script
 
-## Auxiliary Functions
+The `run.sh` file is used to run the commands and define important variables for the application.
 
-1. `detect_update_available`: Checks if there's an update available for the Git branch specified in `GIT_BRANCH`. If there is, it creates or updates a file indicating this.
-2. `remove_update_available_file`: Deletes a `UPDATE_AVAILABLE.txt` which indicates an available update if it exists.
+```bash
+#!/bin/bash
+export GIT_REPO_URL="https://github.com/In-For-Disaster-Analytics/Cookbook-Jupyter-Template.git"
+export COOKBOOK_NAME="cookbook-template-jupyter"
+export COOKBOOK_CONDA_ENV="example"
+IS_GPU_JOB=false
+```
 
-## Files
+- `GIT_REPO_URL`: the URL of the GitHub repository created from this template.
+- `COOKBOOK_NAME`: the name of the cookbook. It will be used to create the directory where the files will be stored.
+- `COOKBOOK_CONDA_ENV`: the name of the conda environment that will be created on your TACC account.
+- `IS_GPU_JOB`: a boolean variable that defines if the job will run on a GPU node. If you want to run the job on a GPU node, change the value to `true`.
 
-Production files:
+## Create your Cookbook
 
-- `app.json` Tapis app definition file.
-- `Dockerfile`: Dockerfile for building the image prepared to use GPUs.
-- `run.sh` Script to run in the container.
+### Create a new repository
 
-Development files:
+1. Click on the "Use this template" button to create a new repository
+2. Fill in the form with the information for your new repository
 
-- `cpu/Dockerfile.cpu`: Dockerfile for building the image prepared to use CPUs.
-- `run.sh` Script to run in the container.
-- `app-dev.json` Tapis app definition file for development.
+### Build the Docker image
+
+You can skip this step if you don't want to build the Docker image yourself. You can use the Docker image from the registry. [GPU image](https://github.com/orgs/In-For-Disaster-Analytics/packages/container/package/cookbook-jupyter-template-gpu)
+or [CPU image](https://github.com/orgs/In-For-Disaster-Analytics/packages/container/package/cookbook-jupyter-template-cpu)
+
+1. Clone the repository
+2. Build the Docker image using the command below
+
+```bash
+docker build -t cookbook-juptyer-gpu -f Dockerfile.gpu .
+docker build -t cookbook-juptyer-cpu -f Dockerfile.cpu .
+```
+
+3. Push the Docker image to a container registry
+
+```bash
+docker tag cookbook-juptyer-gpu <your-docker-username>/cookbook-juptyer-gpu
+docker push <your-docker-username>/cookbook-juptyer-gpu
+docker tag cookbook-juptyer-cpu <your-docker-username>/cookbook-juptyer-cpu
+docker push <your-docker-username>/cookbook-juptyer-cpu
+```
+
+### Modify the `app.json` file
+
+Each app has a unique `id` and `description`. So, you should change these fields to match your app's name and description.
+
+1. Download the `app.json` file
+2. Change the values `id` and `description` fields with the name and description as you wish.
+3. If you built the Docker image, change the `containerImage` field with the image name you used.
+
+### Create a New Application on the Cookbook UI
+
+1. Go to [Cookbook UI](https://in-for-disaster-analytics.github.io/cookbooks-ui/#/apps)
+2. Click on the "Create Application" button
+3. Fill in the form with the information from your `app.json` file
+4. Click "Create Application"
+5. A new application will be created, and you will be redirected to the application's page
+
+### Run your Cookbook
+
+1. Go to the application's page on the Cookbook UI, if you are not already there
+2. Click on the "Run" button on the right side of the page. This will open the Portal UI
+3. Select the parameters for your job
+
+   ![Select the parameters](images/parameters.png)
+
+- Update cookbook: Control whether the system will update the existing cookbook with the latest version available. This option is irrelevant if you are running the cookbook for the first time.
+- Update conda environment: Control whether the system will update the existing conda environment with the latest version available. This option is irrelevant if you are running the cookbook for the first time.
+
+### Access the notebook
+
+1. Go to the Jobs tab
+2. Wait for the job to be ready
+3. Click in the `Open session` button
+
+   ![Select the parameters](images/open-session.png)
+
+## Next templates
+
+- [Running a command](https://github.com/In-For-Disaster-Analytics/Cookbook-Docker-Template)
+- [Running a Python script using conda](https://github.com/In-For-Disaster-Analytics/Cookbook-Conda-Template)
+- [Running a Jupyter Notebook](https://github.com/In-For-Disaster-Analytics/Cookbook-Jupyter-Template)
+
+## Authors
+
+William Mobley - wmobley@tacc.utexas.edu
+Maximiliano Osorio
