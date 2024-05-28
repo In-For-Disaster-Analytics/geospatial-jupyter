@@ -1,13 +1,13 @@
 {
   "id": "cookbook-jupyter-template-cpu",
-  "version": "0.0.1-pre1",
+  "version": "0.0.1",
   "description": "Jupyter Lab environment for CPU",
   "owner": "${apiUserId}",
   "enabled": true,
   "runtime": "SINGULARITY",
   "runtimeVersion": null,
   "runtimeOptions": ["SINGULARITY_RUN"],
-  "containerImage": "docker://ghcr.io/in-for-disaster-analytics/cookbook-jupyter-template-cpu:sha-0d7061b",
+  "containerImage": "docker://ghcr.io/in-for-disaster-analytics/cookbook-jupyter-template-cpu:0.0.1",
   "jobType": "BATCH",
   "maxJobs": -1,
   "maxJobsPerUser": -1,
@@ -20,7 +20,7 @@
     "execSystemExecDir": "${JobWorkingDir}",
     "execSystemInputDir": "${JobWorkingDir}",
     "execSystemOutputDir": "${JobWorkingDir}/output",
-    "execSystemLogicalQueue": "gpu-a100",
+    "execSystemLogicalQueue": "development",
     "archiveSystemId": "cloud.data",
     "archiveSystemDir": "HOST_EVAL($HOME)/tapis-jobs-archive/${JobCreateDate}/${JobName}-${JobUUID}",
     "archiveOnAppError": true,
@@ -65,7 +65,7 @@
           "name": "Git branch",
           "description": "The branch of the git repository to clone.",
           "inputMode": "REQUIRED",
-          "arg": "dev",
+          "arg": "main",
           "notes": {
             "isHidden": true,
             "enum_values": [
@@ -88,15 +88,6 @@
           "description": "Mount for TAP functions and user dirs",
           "inputMode": "FIXED",
           "arg": "--bind /share,$WORK:$PWD/work,$HOME:$PWD/home,$SCRATCH:$PWD/scratch",
-          "notes": {
-            "isHidden": true
-          }
-        },
-        {
-          "name": "NVIDIA Flag",
-          "description": "Flag to enable NVIDIA cuda",
-          "inputMode": "FIXED",
-          "arg": "--nv",
           "notes": {
             "isHidden": true
           }
@@ -155,6 +146,6 @@
     "isInteractive": true,
     "icon": "jupyter",
     "category": "Data Processing",
-    "queueFilter": ["gpu-a100", "gpu-a100-dev", "gpu-a100-small"]
+    "queueFilter": ["development"]
   }
 }
