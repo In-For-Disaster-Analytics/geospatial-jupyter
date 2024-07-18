@@ -238,10 +238,10 @@ function conda_environment_exists() {
 
 function create_conda_environment() {
 	if [ -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yml ]; then
-		conda env create -n ${COOKBOOK_CONDA_ENV} -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yml --force
+		conda env create -n ${COOKBOOK_CONDA_ENV} -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yml --yes
 		conda activate ${COOKBOOK_CONDA_ENV}
 	elif  [ -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yaml ]; then
-		conda env create -n ${COOKBOOK_CONDA_ENV} -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yaml --force
+		conda env create -n ${COOKBOOK_CONDA_ENV} -f $COOKBOOK_WORKSPACE_DIR/.binder/environment.yaml --yes
 		conda activate ${COOKBOOK_CONDA_ENV}
 	fi
 	if [ -f $COOKBOOK_WORKSPACE_DIR/.binder/requirements.txt ]; then
