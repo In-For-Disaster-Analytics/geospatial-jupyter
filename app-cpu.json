@@ -1,6 +1,6 @@
 {
   "id": "cookbook-jupyter-template-cpu",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Jupyter Lab environment for CPU",
   "owner": "${apiUserId}",
   "enabled": true,
