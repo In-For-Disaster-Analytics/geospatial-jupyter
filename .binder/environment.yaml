@@ -5,6 +5,8 @@ dependencies:
   - ipywidgets
   - ipykernel
   - jupyterlab
-  - pandas
+  - geopandas
   - plotly
   - h3-py
+  - contextily
+  - folium
