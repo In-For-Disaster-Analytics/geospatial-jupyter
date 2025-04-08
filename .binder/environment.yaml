@@ -10,3 +10,4 @@ dependencies:
   - h3-py
   - contextily
   - folium
+  - geodatasets
