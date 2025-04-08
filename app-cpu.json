@@ -1,7 +1,7 @@
 {
   "id": "CHM-cpu",
-  "version": "0.0.1",
-  "description": "Jupyter Lab environment for CPU",
+  "version": "0.0.1sha-a32b7ea-cpu2",
+  "description": "CHM Jupyter Lab environment for CPU",
   "owner": "${apiUserId}",
   "enabled": true,
   "runtime": "SINGULARITY",
@@ -142,6 +142,8 @@
   "tags": ["portalName: ALL"],
   "notes": {
     "label": "CHM - Jupyter Lab (CPU)",
+    "helpUrl": "https://github.com/In-For-Disaster-Analytics/chm",
+    "helpText": "This app creates a Jupyter Lab environment for geospatial data analsyis for the Cultural Heritage Mapping project.",
     "hideNodeCountAndCoresPerNode": true,
     "isInteractive": true,
     "icon": "jupyter",
