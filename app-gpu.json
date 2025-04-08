@@ -1,6 +1,6 @@
 {
-  "id": "cookbook-jupyter-template-gpu",
-  "version": "0.0.2",
+  "id": "CHM-gpu",
+  "version": "0.0.1",
   "description": "Jupyter Lab environment for GPU",
   "owner": "${apiUserId}",
   "enabled": true,
@@ -150,7 +150,7 @@
   },
   "tags": ["portalName: ALL"],
   "notes": {
-    "label": "Cookbook - Jupyter Lab (GPU)",
+    "label": "CHM - Jupyter Lab (GPU)",
     "hideNodeCountAndCoresPerNode": true,
     "isInteractive": true,
     "icon": "jupyter",
