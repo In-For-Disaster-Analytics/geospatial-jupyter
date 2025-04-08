@@ -1,6 +1,6 @@
 {
-  "id": "cookbook-jupyter-template-cpu",
-  "version": "0.0.2",
+  "id": "CHM-cpu",
+  "version": "0.0.1",
   "description": "Jupyter Lab environment for CPU",
   "owner": "${apiUserId}",
   "enabled": true,
@@ -141,7 +141,7 @@
   },
   "tags": ["portalName: ALL"],
   "notes": {
-    "label": "Cookbook - Jupyter Lab (CPU)",
+    "label": "CHM - Jupyter Lab (CPU)",
     "hideNodeCountAndCoresPerNode": true,
     "isInteractive": true,
     "icon": "jupyter",
