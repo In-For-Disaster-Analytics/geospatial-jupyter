@@ -148,6 +148,5 @@
     "category": "Data Processing",
     "queueFilter": ["development", "vm-small"]
 
-
   }
 }
