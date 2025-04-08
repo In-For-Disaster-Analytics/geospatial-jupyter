@@ -1,7 +1,8 @@
-name: llm
+name: chm
 channels:
   - conda-forge
 dependencies:
   - ipywidgets
   - ipykernel
   - jupyterlab
+  - plotly
