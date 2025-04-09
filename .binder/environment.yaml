@@ -8,3 +8,5 @@ dependencies:
   - geopandas
   - plotly
   - h3-py
+  - geodatasets
+  - contextily
