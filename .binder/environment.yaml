@@ -10,3 +10,4 @@ dependencies:
   - h3-py
   - geodatasets
   - contextily
+  - gdal
