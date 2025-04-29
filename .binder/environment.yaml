@@ -2,12 +2,15 @@ name: chm
 channels:
   - conda-forge
 dependencies:
+  - jupyterlab
   - ipywidgets
   - ipykernel
-  - jupyterlab
+  - ipympl
   - geopandas
   - plotly
   - h3-py
   - geodatasets
   - contextily
   - gdal
+  - rasterio
+  - dask
