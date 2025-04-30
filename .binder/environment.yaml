@@ -14,3 +14,4 @@ dependencies:
   - gdal
   - rasterio
   - dask
+  - scikit-image
