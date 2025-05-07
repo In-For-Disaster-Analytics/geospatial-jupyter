@@ -22,6 +22,9 @@ Packages:
 [h3-py](https://pypi.org/project/h3/)
 : Ptyhon wrapper for Uber's [H3 Hexagonal Hierarchical Geospatial Indexing System](https://h3geo.org/) in Python
 
+[Ipyleaflet](https://ipyleaflet.readthedocs.io/en/latest/index.html)
+: Ipyleaflet is a Jupyter widget for Leaflet.js , enabling interactive maps in the Jupyter notebook. Every object in ipyleaflet (including the Map, TileLayers, Layers, Controls, etc.) is interactive: you can dynamically update attributes from Python or from the browser.
+
 [observable_jupyter](https://pypi.org/project/observable-jupyter/)
 :  Embed cells from Observable notebooks into Jupyter notebooks.  
 
