@@ -6,7 +6,7 @@ dependencies:
   - ipywidgets
   - ipykernel
   - ipympl
-  - matplotlib
+  - ipyleaflet
   - geopandas
   - plotly
   - h3-py
