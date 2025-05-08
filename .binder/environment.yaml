@@ -6,7 +6,6 @@ dependencies:
   - ipywidgets
   - ipykernel
   - ipympl
-  - ipyleaflet
   - geopandas
   - plotly
   - h3-py
@@ -14,5 +13,7 @@ dependencies:
   - contextily
   - gdal
   - rasterio
+  - ipyleaflet
+  - localtileserver 
   - dask
   - scikit-image
