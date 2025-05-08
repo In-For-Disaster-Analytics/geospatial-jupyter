@@ -1,4 +1,4 @@
-name: chm
+name: geospatial
 channels:
   - conda-forge
 dependencies:
