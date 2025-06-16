@@ -2,6 +2,7 @@ name: geospatial
 channels:
   - conda-forge
 dependencies:
+  - python=3.12.11
   - jupyterlab
   - ipywidgets
   - ipykernel
@@ -17,3 +18,5 @@ dependencies:
   - localtileserver 
   - dask
   - scikit-image
+  - keplergl
+  - googlemaps
