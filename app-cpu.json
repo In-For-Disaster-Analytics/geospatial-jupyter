@@ -146,6 +146,6 @@
     "isInteractive": true,
     "icon": "jupyter",
     "category": "Data Processing",
-    "queueFilter": ["development"]
+    "queueFilter": ["development", "vm-small"]
   }
 }
