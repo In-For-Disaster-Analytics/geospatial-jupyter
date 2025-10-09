@@ -147,7 +147,7 @@
     "hideNodeCountAndCoresPerNode": true,
     "isInteractive": true,
     "icon": "jupyter",
-    "category": "Data Processing",
+    "category": "Geospatial Analysis",
     "queueFilter": ["development", "vm-small"]
 
   }
