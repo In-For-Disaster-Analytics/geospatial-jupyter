@@ -1,2 +1,3 @@
 ipyfilechooser==0.6.0
 observable_jupyter==0.1.13
+observable-jupyter-widget
