@@ -22,3 +22,8 @@ dependencies:
   - googlemaps
   - folium
   - cartopy
+  - s3fs
+  - pyarrow
+  - fsspec
+  - proj
+  - matplotlib
