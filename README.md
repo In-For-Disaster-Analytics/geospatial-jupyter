@@ -2,7 +2,7 @@
 
 This application provides a Jupyter lab environment with essential geospatial analysis packages preinstalled in order to facilitate work in that space.  
 
-Packages:
+## Installed Packages:
 
 [contextily](https://contextily.readthedocs.io/en/latest/)
 : contextily is a small Python 3 (3.9 and above) package to retrieve tile maps from the internet. It can add those tiles as basemap to matplotlib figures or write tile maps to disk into geospatial raster files. 
@@ -52,5 +52,5 @@ Packages:
 [scikit-image](https://scikit-image.org/)
 : *scikit-image* is a collection of algorithms for image processing.
 
-[s3fs](https://s3fs.readthedocs.io/en/latest/))
+[s3fs](https://s3fs.readthedocs.io/en/latest/)
 : Pythonic file interface to S3.
