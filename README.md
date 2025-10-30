@@ -10,6 +10,9 @@ Packages:
 [dask](https://docs.dask.org/en/stable/index.html)
 : Dask is a Python library for parallel and distributed computing.
 
+[fsspec](https://filesystem-spec.readthedocs.io/en/latest/)
+: Filesystem interfaces for Python
+
 [Folium](https://github.com/python-visualization/folium)
 : Folium builds on the data wrangling strengths of the Python ecosystem and the mapping strengths of the Leaflet.js library. Manipulate your data in Python, then visualize it in a Leaflet map via folium.    
 
@@ -28,6 +31,18 @@ Packages:
 [Ipyleaflet](https://ipyleaflet.readthedocs.io/en/latest/index.html)
 : Ipyleaflet is a Jupyter widget for Leaflet.js , enabling interactive maps in the Jupyter notebook. Every object in ipyleaflet (including the Map, TileLayers, Layers, Controls, etc.) is interactive: you can dynamically update attributes from Python or from the browser.
 
+[matplotlib](https://matplotlib.org/)
+: Comprehensive library for creating static, animated, and interactive visualizations in Python. 
+
+[plotly](https://plotly.com/python/)
+: Interactive, open-source, and browser-based graphing library for Python
+
+[proj](https://proj.org/)
+: PROJ is a generic coordinate transformation software, that transforms coordinates from one coordinate reference system (CRS) to another. This includes cartographic projections as well as geodetic transformations
+
+[pyarrow](https://arrow.apache.org/docs/python/index.html)
+: Apache Arrow Python bindings
+
 [observable_jupyter](https://pypi.org/project/observable-jupyter/)
 :  Embed cells from Observable notebooks into Jupyter notebooks.  
 
@@ -37,4 +52,5 @@ Packages:
 [scikit-image](https://scikit-image.org/)
 : *scikit-image* is a collection of algorithms for image processing.
 
-*test line*
+[s3fs](https://s3fs.readthedocs.io/en/latest/))
+: Pythonic file interface to S3.
