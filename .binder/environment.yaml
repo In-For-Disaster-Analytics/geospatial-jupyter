@@ -28,3 +28,4 @@ dependencies:
   - proj
   - matplotlib
   - plotly
+  - vega
