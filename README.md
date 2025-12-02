@@ -40,6 +40,9 @@ This application provides a Jupyter lab environment with essential geospatial an
 [proj](https://proj.org/)
 : PROJ is a generic coordinate transformation software, that transforms coordinates from one coordinate reference system (CRS) to another. This includes cartographic projections as well as geodetic transformations
 
+[py7zr](https://py7zr.readthedocs.io/en/latest/)
+: 7z library on python
+
 [pyarrow](https://arrow.apache.org/docs/python/index.html)
 : Apache Arrow Python bindings
 
