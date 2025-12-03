@@ -59,4 +59,5 @@ This application provides a Jupyter lab environment with essential geospatial an
 : Pythonic file interface to S3.
 
 [vega](https://vega.github.io/vega/)
-: Vega is a visualization grammar, a declarative language for creating, saving, and sharing interactive visualization designs. With Vega, you can describe the visual appearance and interactive behavior of a visualization in a JSON format, and generate web-based views using Canvas or SVG.
+: Vega is a visualization grammar, a declarative language for creating, saving, and sharing interactive visualization designs. With Vega, you can describe the visual appearance and interactive behavior of a visualization in a JSON format, and generate web-based views using Canvas or SVG. [**Note: not currently installed due to conda conflicts**]
+
