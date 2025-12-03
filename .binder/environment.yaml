@@ -28,5 +28,4 @@ dependencies:
   - proj
   - matplotlib
   - plotly
-  - vega
   - py7zr
